@@ -1,449 +1,348 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>VACYCO — Diagnóstico Estratégico</title>
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>VACYCO — Diagnóstico de Valorización Arquitectónica</title>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
-
 <style>
-
-:root{
---black:#050505;
---petrol:#0D1B1E;
---green:#00A67E;
---white:#F5F5F5;
---gray:#BDBDBD;
-}
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
+*{margin:0;padding:0;box-sizing:border-box}
 body{
-background:var(--black);
+background:#050505;
+color:#F5F5F5;
 font-family:'Inter',sans-serif;
-color:white;
 overflow-x:hidden;
 }
-
 .hero{
 min-height:100vh;
-padding:20px;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:60px 20px;
 background:
-radial-gradient(circle at top left, rgba(0,166,126,.12), transparent 35%),
-radial-gradient(circle at bottom right, rgba(0,166,126,.08), transparent 25%);
+linear-gradient(135deg, rgba(0,166,126,0.08), transparent 35%),
+linear-gradient(180deg, rgba(13,27,30,0.9), rgba(5,5,5,1));
 }
-
-.badge{
-display:inline-block;
-padding:10px 16px;
-border-radius:999px;
-border:1px solid rgba(255,255,255,.08);
-background:rgba(255,255,255,.03);
-font-size:.72rem;
-letter-spacing:2px;
-margin-bottom:24px;
+.container{
+max-width:1200px;
+width:100%;
 }
-
+.grid{
+display:grid;
+grid-template-columns:1.1fr .9fr;
+gap:60px;
+align-items:center;
+}
 h1{
 font-family:'Anton',sans-serif;
-font-size:clamp(3rem,15vw,6rem);
-line-height:.92;
-margin-bottom:20px;
+font-size:clamp(3rem,8vw,7rem);
+line-height:0.95;
+letter-spacing:1px;
+margin-bottom:24px;
 }
-
-.highlight{
-color:var(--green);
-}
-
 .subtitle{
-color:#BDBDBD;
+font-size:1.1rem;
 line-height:1.7;
-margin-bottom:28px;
+max-width:540px;
+color:#C8C8C8;
+margin-bottom:40px;
 }
-
-.visual{
-height:280px;
-border-radius:28px;
-overflow:hidden;
-position:relative;
-margin-bottom:28px;
-
-background:
-linear-gradient(180deg, rgba(0,0,0,.2), rgba(0,0,0,.8)),
-url('./fogata.jpeg') center/cover;
+.badge{
+display:inline-block;
+padding:10px 18px;
+border:1px solid rgba(255,255,255,.15);
+border-radius:999px;
+margin-bottom:25px;
+font-size:.85rem;
+letter-spacing:2px;
+text-transform:uppercase;
+background:rgba(255,255,255,.03);
+backdrop-filter:blur(10px);
 }
-
-.overlay{
-position:absolute;
-bottom:24px;
-left:24px;
-right:24px;
-}
-
-.overlay h2{
-font-family:'Anton',sans-serif;
-font-size:2rem;
-line-height:.95;
-margin-bottom:10px;
-}
-
+.highlight{color:#00A67E}
 .card{
-background:rgba(255,255,255,.04);
+background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
 border:1px solid rgba(255,255,255,.08);
-padding:24px;
-border-radius:28px;
+padding:32px;
+border-radius:24px;
+backdrop-filter:blur(14px);
+box-shadow:0 20px 80px rgba(0,0,0,.35);
 }
-
-.card h3{
+.card h2{
 font-family:'Anton',sans-serif;
-font-size:1.8rem;
-margin-bottom:20px;
+letter-spacing:1px;
+font-size:2rem;
+margin-bottom:24px;
 }
-
 .form-group{
-margin-bottom:16px;
+margin-bottom:18px;
 }
-
 label{
 display:block;
-margin-bottom:8px;
-font-size:.8rem;
-letter-spacing:1px;
-color:#BDBDBD;
+margin-bottom:10px;
+font-size:.9rem;
+color:#B8B8B8;
 }
-
 input,select{
 width:100%;
-padding:17px;
-border:none;
-border-radius:16px;
+padding:16px;
 background:#0D1B1E;
+border:1px solid rgba(255,255,255,.08);
+border-radius:14px;
 color:white;
 font-size:1rem;
 }
-
 button{
 width:100%;
 padding:18px;
 border:none;
-border-radius:18px;
-background:var(--green);
+border-radius:16px;
+background:#00A67E;
 color:white;
 font-weight:700;
 font-size:1rem;
 cursor:pointer;
-margin-top:12px;
+transition:.25s ease;
+margin-top:10px;
 }
-
-.loader{
-display:none;
-margin-top:20px;
-padding:20px;
-border-radius:18px;
-background:rgba(255,255,255,.03);
-line-height:1.8;
-color:#CFCFCF;
+button:hover{
+transform:translateY(-2px);
+box-shadow:0 10px 30px rgba(0,166,126,.3);
 }
-
 .result{
 display:none;
-margin-top:20px;
+margin-top:26px;
 padding:24px;
-border-radius:24px;
+border-radius:18px;
 background:rgba(0,166,126,.08);
-border:1px solid rgba(0,166,126,.18);
+border:1px solid rgba(0,166,126,.2);
 }
-
-.result h2{
+.result h3{
 font-family:'Anton',sans-serif;
-font-size:2rem;
-line-height:1;
-margin-bottom:14px;
+font-size:1.7rem;
+margin-bottom:12px;
 }
-
 .metrics{
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:12px;
+gap:14px;
 margin:20px 0;
 }
-
 .metric{
-padding:16px;
-border-radius:18px;
+padding:18px;
 background:rgba(255,255,255,.03);
+border-radius:14px;
+border:1px solid rgba(255,255,255,.06);
 }
-
 .metric span{
 display:block;
-font-size:.72rem;
-margin-bottom:8px;
-color:#A0A0A0;
+font-size:.8rem;
+color:#9A9A9A;
+margin-bottom:6px;
 }
-
+.metric strong{
+font-size:1.2rem;
+}
 .contact{
-margin-top:20px;
+margin-top:24px;
 padding-top:18px;
 border-top:1px solid rgba(255,255,255,.08);
-line-height:2;
+font-size:.95rem;
+line-height:1.8;
 }
-
-.contact a{
-color:white;
-text-decoration:none;
-}
-
-.contact a:hover{
-color:var(--green);
-}
-
-.footer{
-margin-top:40px;
-font-size:.8rem;
-text-align:center;
-color:#777;
-}
-
-@media(min-width:1024px){
-
-.hero{
-padding:60px;
-}
-
-.layout{
-display:grid;
-grid-template-columns:1fr 520px;
-gap:60px;
-align-items:center;
-max-width:1400px;
-margin:auto;
-}
-
+a{color:#00A67E;text-decoration:none}
 .visual{
-height:720px;
+height:700px;
+border-radius:30px;
+position:relative;
+overflow:hidden;
+background:
+linear-gradient(180deg, rgba(0,0,0,.2), rgba(0,0,0,.8)),
+url('https://images.unsplash.com/photo-1511818966892-d7d671e672a2?q=80&w=1600&auto=format&fit=crop') center/cover;
+border:1px solid rgba(255,255,255,.08);
 }
-
-h1{
-font-size:7rem;
-max-width:780px;
+.overlay{
+position:absolute;
+bottom:40px;
+left:40px;
+right:40px;
 }
-
-.card{
-position:sticky;
-top:40px;
+.overlay p{
+font-size:1rem;
+line-height:1.7;
+color:#E5E5E5;
+max-width:500px;
 }
-
+.overlay h2{
+font-family:'Anton',sans-serif;
+font-size:3rem;
+line-height:1;
+margin-bottom:16px;
 }
-
+@media(max-width:980px){
+.grid{grid-template-columns:1fr}
+.visual{height:420px}
+}
 </style>
 </head>
-
 <body>
 
 <section class="hero">
-
-<div class="layout">
+<div class="container">
+<div class="grid">
 
 <div>
-
-<div class="badge">
-VACYCO — ARQUITECTURA ESTRATÉGICA
-</div>
+<div class="badge">VACYCO — Arquitectura Estratégica</div>
 
 <h1>
 TU TERRENO<br>
 PODRÍA VALER<br>
-<span class="highlight">MUCHO MÁS</span>
+<span class="highlight">MUCHO MÁS</span><br>
+DE LO QUE CREES.
 </h1>
 
 <p class="subtitle">
-Transformamos arquitectura en activos productivos mediante valorización estratégica y monetización inteligente.
+La diferencia no está en el terreno.
+Está en la estrategia arquitectónica, la monetización inteligente y la creación de activos productivos.
 </p>
 
-<div class="visual">
-
-<div class="overlay">
-
-<h2>
-ACTIVOS<br>
-PRODUCTIVOS
-</h2>
-
-<p>
-Arquitectura premium diseñada para generar libertad financiera.
-</p>
-
-</div>
-
-</div>
-
+<div class="visual mobile-only"></div>
 </div>
 
 <div class="card">
-
-<h3>INICIAR DIAGNÓSTICO</h3>
+<h2>INICIAR DIAGNÓSTICO</h2>
 
 <div class="form-group">
-<label>Ubicación</label>
-<input id="ubicacion" placeholder="Ej: Barichara, Colombia">
+<label>Ubicación del terreno</label>
+<input id="ubicacion" placeholder="Ej: Santa Marta, Colombia">
 </div>
 
 <div class="form-group">
-<label>Área del lote</label>
+<label>Área del lote (m²)</label>
 <input id="area" type="number" placeholder="Ej: 1200">
 </div>
 
 <div class="form-group">
 <label>Tipo de entorno</label>
-
 <select id="entorno">
 <option>Turístico</option>
 <option>Costero</option>
-<option>Montaña</option>
 <option>Rural</option>
 <option>Industrial</option>
+<option>Montaña</option>
 <option>Urbano</option>
 </select>
+</div>
 
+<div class="form-group">
+<label>Objetivo principal</label>
+<select id="objetivo">
+<option>Flujo de caja</option>
+<option>Valorización</option>
+<option>Renta corta</option>
+<option>Vivienda experiencial</option>
+<option>Expansión industrial</option>
+</select>
 </div>
 
 <button onclick="generarDiagnostico()">
 GENERAR DIAGNÓSTICO
 </button>
 
-<div class="loader" id="loader">
-Analizando potencial...<br>
-Calculando valorización...<br>
-Detectando oportunidades...
-</div>
-
 <div class="result" id="resultado">
+<h3>ACTIVO EXPERIENCIAL DE ALTA PROYECCIÓN</h3>
 
-<h2>
-ACTIVO DE<br>
-ALTA PROYECCIÓN
-</h2>
-
-<p id="mensaje"></p>
+<p id="textoResultado"></p>
 
 <div class="metrics">
-
 <div class="metric">
 <span>ROI POTENCIAL</span>
 <strong id="roi">18% — 27%</strong>
 </div>
 
 <div class="metric">
-<span>RETORNO</span>
+<span>RETORNO ESTIMADO</span>
 <strong id="retorno">3.2 años</strong>
 </div>
 
+<div class="metric">
+<span>ESCALABILIDAD</span>
+<strong>ALTA</strong>
 </div>
+
+<div class="metric">
+<span>RIESGO OPERATIVO</span>
+<strong>MEDIO / BAJO</strong>
+</div>
+</div>
+
+<p>
+<strong>RECOMENDACIÓN VACYCO:</strong><br>
+Desarrollar el proyecto por fases mediante arquitectura modular experiencial para maximizar flujo de caja, valorización y flexibilidad operativa.
+</p>
 
 <div class="contact">
-
-<strong>CONTACTO</strong><br><br>
-
-<a href="mailto:gerencia.vacyco@gmail.com">
-📩 gerencia.vacyco@gmail.com
-</a><br>
-
-<a href="https://wa.me/573146969349" target="_blank">
-📱 WhatsApp VACYCO
-</a><br>
-
-<a href="https://www.instagram.com/vacyco?igsh=NWZ1OWVveWVmY3Ez" target="_blank">
-Instagram @vacyco
-</a><br>
-
-<a href="https://www.tiktok.com/@vacyco?_r=1&_t=ZS-974Z0Gqigrg" target="_blank">
-TikTok @vacyco
-</a><br>
-
-<a href="https://www.linkedin.com/in/vacyco" target="_blank">
-LinkedIn VACYCO
-</a>
-
+<strong>Contacto VACYCO</strong><br>
+📩 gerencia.vacyco@gmail.com<br>
+📱 +57 3146969349<br>
+Instagram: @vacyco<br>
+TikTok: @vacyco
 </div>
-
-</div>
-
-<div class="footer">
-VACYCO — Arquitectura Estratégica
 </div>
 
 </div>
 
 </div>
-
+</div>
 </section>
 
 <script>
-
 function generarDiagnostico(){
-
-const loader = document.getElementById('loader');
-const resultado = document.getElementById('resultado');
-
-loader.style.display = 'block';
-resultado.style.display = 'none';
-
-setTimeout(() => {
-
-loader.style.display = 'none';
-resultado.style.display = 'block';
-
-const entorno = document.getElementById('entorno').value;
 const area = parseInt(document.getElementById('area').value) || 1000;
+const entorno = document.getElementById('entorno').value;
+const objetivo = document.getElementById('objetivo').value;
 
-let roi = '18% — 27%';
-let retorno = '3.2 años';
-let mensaje = '';
+let roi = "18% — 27%";
+let retorno = "3.2 años";
+let mensaje = "";
 
-if(entorno === 'Costero'){
-roi = '24% — 38%';
-retorno = '2.4 años';
-
-mensaje = 'El terreno presenta alto potencial para desarrollar arquitectura experiencial premium orientada a renta corta y valorización acelerada.';
+if(entorno === "Turístico" || objetivo === "Renta corta"){
+roi = "22% — 34%";
+retorno = "2.8 años";
+mensaje = "El terreno presenta un alto potencial para desarrollar experiencias premium de renta corta con arquitectura modular y monetización escalable.";
 }
 
-else if(entorno === 'Industrial'){
-roi = '14% — 22%';
-retorno = '4.8 años';
-
-mensaje = 'La ubicación tiene potencial estratégico para expansión industrial modular y crecimiento operativo escalable.';
+else if(entorno === "Industrial"){
+roi = "14% — 21%";
+retorno = "4.5 años";
+mensaje = "La ubicación muestra potencial para expansión acelerada de infraestructura productiva con optimización operativa y crecimiento escalable.";
 }
 
-else if(area > 5000){
-roi = '29% — 42%';
-retorno = '2.1 años';
-
-mensaje = 'El tamaño del lote permite desarrollar un activo híbrido de alto impacto con escalabilidad futura.';
+else if(entorno === "Costero"){
+roi = "24% — 38%";
+retorno = "2.5 años";
+mensaje = "El terreno tiene características ideales para activos experienciales de lujo silencioso enfocados en turismo premium y valorización estratégica.";
 }
 
 else{
+mensaje = "El terreno tiene potencial para convertirse en un activo productivo mediante arquitectura estratégica, monetización inteligente y desarrollo por fases.";
+}
 
-mensaje = 'El terreno tiene potencial para convertirse en un activo productivo mediante arquitectura estratégica y monetización inteligente.';
+if(area > 5000){
+roi = "28% — 41%";
+retorno = "2.1 años";
 }
 
 document.getElementById('roi').innerText = roi;
 document.getElementById('retorno').innerText = retorno;
-document.getElementById('mensaje').innerText = mensaje;
+document.getElementById('textoResultado').innerText = mensaje;
 
-resultado.scrollIntoView({
+document.getElementById('resultado').style.display = 'block';
+
+document.getElementById('resultado').scrollIntoView({
 behavior:'smooth'
 });
-
-},1800);
-
 }
-
 </script>
 
 </body>
